@@ -1,49 +1,129 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React from 'react';
+import {StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
+import { createStackNavigator, createAppContainer, navigationOptions } from "react-navigation";
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+class App extends React.Component {
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+  constructor(props){
+    super(props);
+    this.state={
+      data:[]
+    }
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
+  componentDidMount(){
+
+      fetch('https://apigetrest.herokuapp.com/hotel/1/?format=json')
+        .then((response) => response.json())
+        .then((responseJson) => {
+          this.setState({
+            data: responseJson,
+          })
+        })
+        .catch((error) => {
+          alert(error);
+        });
+  
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <View>
+        <ImageBackground source={{uri : this.state.data.background_image}} style={{width:'100%', height:'100%'}}>
+          <View style={{backgroundColor:'rgba(0,0,0,0.5)', flex: 1}}>
+            <View style={styles.initText}>
+              <Text style={styles.hotelName}>{this.state.data.nome}</Text>
+              <Text style={styles.description}>{this.state.data.description}</Text>
+            </View>
+
+            <View style={styles.loginInput}>
+              <TextInput
+                  style={styles.textLogin}
+                  placeholder={'E-mail'}
+                  underlineColorAndroid='white'
+                  placeholderTextColor='white'/>
+              <TextInput
+                  style={styles.textLogin}
+                  secureTextEntry={true}
+                  placeholder={'Senha'}
+                  underlineColorAndroid='white'
+                  placeholderTextColor='white'/>
+              <TouchableOpacity style={styles.loginButton}>
+                <Text style={styles.textEntrance}>Entrar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.loginButtonFacebook}>
+                <Text style={styles.textEntranceFacebook}>ENTRAR COM FACEBOOK</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ImageBackground>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  hotelName:{
+    fontSize:70,
+    letterSpacing:20,
+    color: 'white',
+  },
+  initText:{
+    alignItems:'center',
+    marginTop:100,
+  },
+  description:{
+    fontSize:15,
+    color: 'white',
+  },
+  loginInput:{
+    alignItems:'center',
+    marginTop: 200,
+  },
+  textLogin:{
+    width: 250,
+  },
+  loginButton:{
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    marginTop:20,
+    height:50,
+    width:300,
+    borderRadius: 90,
+    backgroundColor: 'white',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  textEntrance:{
+    color: 'black',
+    letterSpacing: 5,
+    fontSize: 19,
+    fontWeight: 'bold',
+  },  
+  loginButtonFacebook:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:20,
+    height:50,
+    width:300,
+    borderRadius: 90,
+    backgroundColor: 'rgb(60, 94, 150)',
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  textEntranceFacebook:{
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  }  
 });
+
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: App,
+    navigationOptions: ()=>({
+      header: null,
+    }),
+  },
+    initialRouteName: "Home"
+  }
+);
+
+export default createAppContainer(AppNavigator);
