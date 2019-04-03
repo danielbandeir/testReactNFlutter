@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
 import { createStackNavigator, createAppContainer, navigationOptions } from "react-navigation";
+import tutorial from './src/components/tutorial'
+
 
 class App extends React.Component {
 
@@ -48,7 +50,7 @@ class App extends React.Component {
                   placeholder={'Senha'}
                   underlineColorAndroid='white'
                   placeholderTextColor='white'/>
-              <TouchableOpacity style={styles.loginButton}>
+              <TouchableOpacity style={styles.loginButton} onPress={() => {this.props.navigation.navigate('Tutorial');}}>
                 <Text style={styles.textEntrance}>Entrar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.loginButtonFacebook}>
@@ -118,6 +120,12 @@ const styles = StyleSheet.create({
 const AppNavigator = createStackNavigator({
   Home: {
     screen: App,
+    navigationOptions: ()=>({
+      header: null,
+    }),
+  },
+  Tutorial: {
+    screen: tutorial,
     navigationOptions: ()=>({
       header: null,
     }),
