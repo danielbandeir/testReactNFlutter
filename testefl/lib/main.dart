@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testefl/dashboard.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,6 +24,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Stack(
         children: <Widget>[
           Image.network(
@@ -66,7 +68,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Container(
-                  height: 170.0,
+                  height: MediaQuery.of(context).size.height >= 550.0 ? 220.0 : 50.0,
                 ),
                 Container(
                   width: 300.0,
@@ -104,6 +106,64 @@ class _LoginState extends State<Login> {
                           obscureText: true,
                         ),
                       ),
+                      FlatButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => dashboard())
+                          );
+                        },
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50.0,
+                          width: 300.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(90.0),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [Color.fromRGBO(255, 205, 89, 1), Color.fromRGBO(214, 149, 0, 1)]
+                            ),
+                          ),
+                          child: Text(
+                            'Entrar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: 5.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      FlatButton(
+                        onPressed: null,
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(90.0),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [Color.fromRGBO(59, 89, 152, 1), Color.fromRGBO(78, 113, 186, 1)]
+                            ),
+                          ),
+
+                          child: Text(
+                              'ENTRAR COM FACEBOOK',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                        ),
+                      ),
+                    ),
                     ],
                   ),
                 ),
