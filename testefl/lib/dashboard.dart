@@ -34,6 +34,8 @@ class _dashboardState extends State<dashboard> {
                   ),
                 ],
               ),
+
+              //Name, description button chat
               Column(
                 children: <Widget>[
                  Container(
@@ -43,13 +45,18 @@ class _dashboardState extends State<dashboard> {
                    child: Row(
                      children: <Widget>[
                        Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
                          children: <Widget>[
-                           Text(
-                             'Bruno B.',
-                             style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w400),
+                           Padding(
+                             padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
+                             child:
+                               Text(
+                                 'Bruno B.',
+                                 style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w400),
+                               ),
                            ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
+                              padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
                               child:
                               Row(
                                 children: <Widget>[
@@ -70,13 +77,36 @@ class _dashboardState extends State<dashboard> {
                             ),
                          ],
                        ),
-                       FlatButton(
-                         onPressed: null,
+                       Column(
+                         children: <Widget>[
+                           Padding(
+                             padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(40, 0, 0, 0),
+                             child:
+                             FlatButton(
+                               onPressed: () {},
+                               child: Container(
+                                 width: MediaQuery.of(context).size.width<400 ? 50: 70,
+                                 height: MediaQuery.of(context).size.width<400 ? 50: 70,
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(90.0),
+                                   gradient: LinearGradient(
+                                       begin: Alignment.topLeft,
+                                       end: Alignment.bottomRight,
+                                       colors: [Color.fromRGBO(255, 205, 89, 1), Color.fromRGBO(214, 149, 0, 1)]
+                                   ),
+                                 ),
+                                 child: Icon(
+                                   Icons.chat_bubble_outline,
+                                   size: MediaQuery.of(context).size.width<400 ? 22: 32,
+                                 ),
+                               ),
+                             ),
+                           ),
+                         ],
                        ),
                      ],
                    ),
-                ),
-
+                  ),
                 ],
               ),
             ],
