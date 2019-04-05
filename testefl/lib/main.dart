@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:testefl/dashboard.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
+
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -21,6 +26,51 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  @override
+  void initState(){
+    super.initState();
+    this.getHotelData();
+    this.getPersonData();
+  }
+
+  final String urlApiHotel = "https://apigetrest.herokuapp.com/hotel/";
+  List dataHotel;
+
+  final String urlApiPerson = "https://apigetrest.herokuapp.com/pessoa/";
+  List dataPerson;
+
+  Future<String> getPersonData() async{
+    var res = await http
+        .get(Uri.encodeFull(urlApiPerson), headers: {"Accept":"application/json"});
+
+    setState(() {
+      var resBody = json.decode(res.body);
+      dataPerson = resBody["results"];
+    });
+  }
+
+  Future<String> getHotelData() async{
+    var res = await http
+        .get(Uri.encodeFull(urlApiHotel), headers: {"Accept":"application/json"});
+
+    setState(() {
+      var resBody = json.decode(res.body);
+      dataHotel = resBody["results"];
+    });
+  }
+
+  final controllerTextLogin = TextEditingController();
+  final controllerPasswordLogin = TextEditingController();
+
+
+
+  @override
+  void dispose(){
+    controllerTextLogin.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +78,7 @@ class _LoginState extends State<Login> {
       body: Stack(
         children: <Widget>[
           Image.network(
-            "https://images.unsplash.com/photo-1521090029433-afd0d68460f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80",
+            dataHotel[0]['background_image'],
             fit: BoxFit.cover,
             height: 2000.0,
           ),
@@ -48,7 +98,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'neue',
+                  dataHotel[0]['nome'],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -80,6 +130,7 @@ class _LoginState extends State<Login> {
                         ),
                         child:
                         TextField(
+                          controller: controllerTextLogin,
                           style: TextStyle(color: Colors.white,),
                           decoration: InputDecoration(
                               icon: Icon(Icons.account_circle, color: Colors.white),
@@ -95,6 +146,7 @@ class _LoginState extends State<Login> {
                         ),
                         child:
                         TextField(
+                          controller: controllerPasswordLogin,
                           style: TextStyle(color: Colors.white,),
                           decoration: InputDecoration(
                               icon: Icon(Icons.lock, color: Colors.white),
@@ -110,7 +162,7 @@ class _LoginState extends State<Login> {
                         onPressed: (){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => dashboard())
+                            MaterialPageRoute(builder: (context) => dashboard(urlPerson: dataPerson[0]['url']))
                           );
                         },
                         textColor: Colors.white,
@@ -124,7 +176,7 @@ class _LoginState extends State<Login> {
                             gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
-                                colors: [Color.fromRGBO(255, 205, 89, 1), Color.fromRGBO(214, 149, 0, 1)]
+                                colors: [Color.fromRGBO(243,195,16, 1), Color.fromRGBO(233, 151, 4, 1)]
                             ),
                           ),
                           child: Text(
@@ -139,7 +191,29 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       FlatButton(
-                        onPressed: null,
+                        onPressed: (){
+                          return showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Container(
+                                  width: 300,
+                                  height: 40,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        controllerTextLogin.text,
+                                      ),
+                                      Text(
+                                        controllerPasswordLogin.text,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
                         textColor: Colors.white,
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                         child: Container(

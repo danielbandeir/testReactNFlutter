@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:testefl/models/person.dart';
 
 class dashboard extends StatefulWidget {
+
+  final Person pessoa;
+
+  dashboard({Key key, @required this.pessoa}) : super(key : key);
+
   @override
   _dashboardState createState() => _dashboardState();
 }
 
 class _dashboardState extends State<dashboard> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +23,7 @@ class _dashboardState extends State<dashboard> {
               Stack(
                 children: <Widget>[
                   Image.network(
-                    "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                    widget.pessoa.foto,
                     height: MediaQuery.of(context).size.height*0.6,
                     width: 1000,
                     fit: BoxFit.cover,
@@ -51,7 +58,7 @@ class _dashboardState extends State<dashboard> {
                              padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
                              child:
                                Text(
-                                 'Bruno B.',
+                                 widget.pessoa.nome,
                                  style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w400),
                                ),
                            ),
@@ -61,15 +68,15 @@ class _dashboardState extends State<dashboard> {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                    'Desenvolvedor Web ',
+                                    widget.pessoa.description+' ',
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    ' João Pessoa ',
+                                    ' '+widget.pessoa.cidade+' ',
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    ' -  PB',
+                                    '  -  '+widget.pessoa.estado,
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   )
                                 ],
@@ -92,7 +99,7 @@ class _dashboardState extends State<dashboard> {
                                    gradient: LinearGradient(
                                        begin: Alignment.topLeft,
                                        end: Alignment.bottomRight,
-                                       colors: [Color.fromRGBO(255, 205, 89, 1), Color.fromRGBO(214, 149, 0, 1)]
+                                       colors: [Color.fromRGBO(243,195,16, 1), Color.fromRGBO(233, 151, 4, 1)]
                                    ),
                                  ),
                                  child: Icon(
