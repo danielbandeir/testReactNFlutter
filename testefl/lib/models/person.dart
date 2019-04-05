@@ -7,6 +7,6 @@ class Person{
   String estado;
   String foto;
 
-  person(this.url, this.nome, this.senha, this.description, this.cidade, this.estado, this.foto)
+  Person(this.url, this.nome, this.senha, this.description, this.cidade, this.estado, this.foto);
 
 }

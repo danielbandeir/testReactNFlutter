@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:testefl/models/person.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'dart:core';
+import 'package:http/http.dart' as http;
 
 class dashboard extends StatefulWidget {
 
-  final Person pessoa;
+  final String pessoa;
 
   dashboard({Key key, @required this.pessoa}) : super(key : key);
 
@@ -12,6 +15,25 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<dashboard> {
+
+  @override
+  void initState(){
+    this.getPersonData(widget.pessoa);
+    super.initState();
+  }
+
+  Map dataPerson;
+
+  Future<String> getPersonData(String pessoa) async{
+    var res = await http
+        .get(Uri.encodeFull(pessoa), headers: {"Accept":"application/json"});
+
+
+    setState(() {
+      var resBody = json.decode(res.body);
+      dataPerson = resBody;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +45,7 @@ class _dashboardState extends State<dashboard> {
               Stack(
                 children: <Widget>[
                   Image.network(
-                    widget.pessoa.foto,
+                    dataPerson["foto"],
                     height: MediaQuery.of(context).size.height*0.6,
                     width: 1000,
                     fit: BoxFit.cover,
@@ -58,7 +80,7 @@ class _dashboardState extends State<dashboard> {
                              padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
                              child:
                                Text(
-                                 widget.pessoa.nome,
+                                 dataPerson["nome"],
                                  style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w400),
                                ),
                            ),
@@ -68,15 +90,15 @@ class _dashboardState extends State<dashboard> {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                    widget.pessoa.description+' ',
+                                    ' '+dataPerson["description"]+' ',
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    ' '+widget.pessoa.cidade+' ',
+                                    ' '+dataPerson["cidade"]+' ',
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    '  -  '+widget.pessoa.estado,
+                                    '  -  '+dataPerson["estado"],
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   )
                                 ],

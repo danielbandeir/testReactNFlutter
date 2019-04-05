@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
-
-
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -162,7 +160,7 @@ class _LoginState extends State<Login> {
                         onPressed: (){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => dashboard(urlPerson: dataPerson[0]['url']))
+                            MaterialPageRoute(builder: (context) => dashboard(pessoa: dataPerson[2]['url']))
                           );
                         },
                         textColor: Colors.white,
@@ -202,10 +200,7 @@ class _LoginState extends State<Login> {
                                   child: Column(
                                     children: <Widget>[
                                       Text(
-                                        controllerTextLogin.text,
-                                      ),
-                                      Text(
-                                        controllerPasswordLogin.text,
+                                        dataPerson[0]['nome'].toString()
                                       ),
                                     ],
                                   ),
