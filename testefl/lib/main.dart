@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:testefl/dashboard.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:core';
 import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
@@ -24,6 +25,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  List dataHotel;
+  List dataPerson;
+  String urlPersonIfLogin;
+  final String urlApiHotel = "https://apigetrest.herokuapp.com/hotel/";
+  final String urlApiPerson = "https://apigetrest.herokuapp.com/pessoa/";
 
   @override
   void initState(){
@@ -31,12 +37,6 @@ class _LoginState extends State<Login> {
     this.getHotelData();
     this.getPersonData();
   }
-
-  final String urlApiHotel = "https://apigetrest.herokuapp.com/hotel/";
-  List dataHotel;
-
-  final String urlApiPerson = "https://apigetrest.herokuapp.com/pessoa/";
-  List dataPerson;
 
   Future<String> getPersonData() async{
     var res = await http
@@ -61,7 +61,26 @@ class _LoginState extends State<Login> {
   final controllerTextLogin = TextEditingController();
   final controllerPasswordLogin = TextEditingController();
 
+ bool verifyIfUserExist(){
+      String user = controllerTextLogin.text;
+      String password = controllerPasswordLogin.text;
 
+      for(int i=0; i<this.dataPerson.length ; i++){
+        if (this.dataPerson[i]["nome"] == user){
+          if (this.dataPerson[i]["senha"] == password){
+            urlPersonIfLogin=this.dataPerson[i]["url"];
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+        else {
+          return false;
+        }
+      }
+
+ }
 
   @override
   void dispose(){
@@ -158,10 +177,28 @@ class _LoginState extends State<Login> {
                       ),
                       FlatButton(
                         onPressed: (){
+                          if (this.verifyIfUserExist()){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => dashboard(pessoa: dataPerson[2]['url']))
+                            MaterialPageRoute(builder: (context) => dashboard(pessoa: this.urlPersonIfLogin)
+                           )
                           );
+                          }
+                          else {
+                            AlertDialog(
+                              content: Container(
+                                width: 300,
+                                height: 40,
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                        "Credenciais erradas, desculpa =/"
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
                         },
                         textColor: Colors.white,
                         padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
@@ -200,7 +237,7 @@ class _LoginState extends State<Login> {
                                   child: Column(
                                     children: <Widget>[
                                       Text(
-                                        dataPerson[0]['nome'].toString()
+                                        'Testando'
                                       ),
                                     ],
                                   ),
