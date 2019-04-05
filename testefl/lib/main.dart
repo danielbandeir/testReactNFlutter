@@ -65,6 +65,8 @@ class _LoginState extends State<Login> {
       String user = controllerTextLogin.text;
       String password = controllerPasswordLogin.text;
 
+      print(this.dataPerson.length);
+
       for(int i=0; i<this.dataPerson.length ; i++){
         if (this.dataPerson[i]["nome"] == user){
           if (this.dataPerson[i]["senha"] == password){
