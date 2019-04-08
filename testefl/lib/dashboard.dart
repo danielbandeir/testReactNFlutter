@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'dart:async';
 import 'dart:core';
-import 'package:http/http.dart' as http;
+import 'package:testefl/models/person.dart';
+import 'package:location/location.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
+
 
 class dashboard extends StatefulWidget {
 
-  final String pessoa;
+  final Person pessoa;
+
 
   dashboard({Key key, @required this.pessoa}) : super(key : key);
 
@@ -15,24 +18,37 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<dashboard> {
+  LocationData currentLocation;
+  var location = new Location();
+  String error;
 
   @override
   void initState(){
-    this.getPersonData(widget.pessoa);
     super.initState();
+    this._getCurrentLocation();
   }
 
-  Map dataPerson;
+  // pegar a localização atual
+  Future<LocationData> _getCurrentLocation() async {
+    var permission = await location.hasPermission();
 
-  Future<String> getPersonData(String pessoa) async{
-    var res = await http
-        .get(Uri.encodeFull(pessoa), headers: {"Accept":"application/json"});
-
-
-    setState(() {
-      var resBody = json.decode(res.body);
-      dataPerson = resBody;
-    });
+    try {
+      if (permission == true){
+        currentLocation = await location.getLocation();
+      }
+      else{
+        location.requestPermission();
+        if (permission == true){
+          currentLocation = await location.getLocation();
+        }
+      }
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        error = 'Permission denied';
+      }
+      currentLocation = null;
+    }
+    return currentLocation;
   }
 
   @override
@@ -45,7 +61,7 @@ class _dashboardState extends State<dashboard> {
               Stack(
                 children: <Widget>[
                   Image.network(
-                    dataPerson["foto"],
+                    widget.pessoa.foto,
                     height: MediaQuery.of(context).size.height*0.6,
                     width: 1000,
                     fit: BoxFit.cover,
@@ -80,7 +96,7 @@ class _dashboardState extends State<dashboard> {
                              padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
                              child:
                                Text(
-                                 dataPerson["nome"],
+                                 widget.pessoa.nome,
                                  style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w400),
                                ),
                            ),
@@ -90,20 +106,24 @@ class _dashboardState extends State<dashboard> {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                    ' '+dataPerson["description"]+' ',
+                                    ' '+widget.pessoa.description+' ',
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    ' '+dataPerson["cidade"]+' ',
+                                    ' '+widget.pessoa.cidade+' ',
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    '  -  '+dataPerson["estado"],
+                                    '  -  '+widget.pessoa.estado,
                                     style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
                                   )
                                 ],
                               ),
                             ),
+                           Text(
+                             'Latitude: '+currentLocation.latitude.toString()+' - Longitude: '+currentLocation.longitude.toString(),
+                             style: TextStyle(color: Colors.white),
+                           ),
                          ],
                        ),
                        Column(
@@ -158,19 +178,8 @@ class _dashboardState extends State<dashboard> {
           ),
         ],
       ),
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Colors.black
-        ),
-        child:
-          BottomNavigationBar(items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard), title: Text('')),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), title: Text('')),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble_outline), title: Text('')),
-          BottomNavigationBarItem(icon: Icon(Icons.perm_media), title: Text('')),
-      ]),
-      ),
-
     );
+
+
   }
 }

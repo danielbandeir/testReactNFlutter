@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:core';
 import 'package:http/http.dart' as http;
+import 'package:testefl/models/person.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,7 +28,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   List dataHotel;
   List dataPerson;
-  String urlPersonIfLogin;
+  Person pessoaLogada;
   final String urlApiHotel = "https://apigetrest.herokuapp.com/hotel/";
   final String urlApiPerson = "https://apigetrest.herokuapp.com/pessoa/";
 
@@ -61,6 +62,8 @@ class _LoginState extends State<Login> {
   final controllerTextLogin = TextEditingController();
   final controllerPasswordLogin = TextEditingController();
 
+
+//verifica se o usuário digitado existe e passa os dados de login caso ele exista, sem precisar chamar novamente o JSON.
  bool verifyIfUserExist(){
       String user = controllerTextLogin.text;
       String password = controllerPasswordLogin.text;
@@ -70,10 +73,11 @@ class _LoginState extends State<Login> {
       for(int i=0; i<this.dataPerson.length ; i++){
         if (this.dataPerson[i]["nome"] == user){
           if (this.dataPerson[i]["senha"] == password){
-            urlPersonIfLogin=this.dataPerson[i]["url"];
+            pessoaLogada = new Person(this.dataPerson[i]['url'], this.dataPerson[i]['nome'], this.dataPerson[i]['senha'], this.dataPerson[i]['description'], this.dataPerson[i]['cidade'], this.dataPerson[i]['estado'], this.dataPerson[i]['foto']);
             return true;
           }
           else{
+
             return false;
           }
         }
@@ -182,24 +186,29 @@ class _LoginState extends State<Login> {
                           if (this.verifyIfUserExist()){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => dashboard(pessoa: this.urlPersonIfLogin)
+                            MaterialPageRoute(builder: (context) => dashboard(pessoa: this.pessoaLogada),
                            )
                           );
                           }
                           else {
-                            AlertDialog(
-                              content: Container(
-                                width: 300,
-                                height: 40,
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                        "Credenciais erradas, desculpa =/"
-                                    ),
-                                  ],
+                            return showDialog(
+                                context: context,
+                                builder: (context) {
+                              return AlertDialog(
+                                content: Container(
+                                  width: 300,
+                                  height: 40,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                          'Credenciais erradas, desculpe =/'
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            },
+                          );
                           }
                         },
                         textColor: Colors.white,
