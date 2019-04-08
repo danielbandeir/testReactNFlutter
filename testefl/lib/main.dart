@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:testefl/models/person.dart';
+import 'package:testefl/mainNavigation.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,6 +38,7 @@ class _LoginState extends State<Login> {
     super.initState();
     this.getHotelData();
     this.getPersonData();
+    print(pessoaLogada);
   }
 
   Future<String> getPersonData() async{
@@ -186,7 +188,7 @@ class _LoginState extends State<Login> {
                           if (this.verifyIfUserExist()){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => dashboard(pessoa: this.pessoaLogada),
+                            MaterialPageRoute(builder: (context) => mainNavigation(pessoa: this.pessoaLogada),
                            )
                           );
                           }

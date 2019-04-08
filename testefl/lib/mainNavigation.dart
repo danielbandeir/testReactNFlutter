@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:testefl/dashboard.dart';
+import 'package:testefl/models/person.dart';
 
 class mainNavigation extends StatefulWidget {
+
+  final Person pessoa;
+
   @override
   _mainNavigationState createState() => _mainNavigationState();
+
+  mainNavigation({Key key, @required this.pessoa}) : super(key : key);
+
 }
 
 class _mainNavigationState extends State<mainNavigation> {
   int currentIndex = 1;
 
-
   @override
   void initState() {
     super.initState();
   }
-
 
   Widget callPage(int index){
     switch(index){
@@ -22,8 +28,12 @@ class _mainNavigationState extends State<mainNavigation> {
         break;
       }
       case 1: {
-        print('perfil');
-        break;
+        print('foi pra ca');
+        Navigator.push(
+          context,
+          // We'll create the SelectionScreen in the next step!
+          MaterialPageRoute(builder: (context) => dashboard(pessoa: widget.pessoa)));
+          break;
       }
       case 2: {
         print('chat');
@@ -39,6 +49,10 @@ class _mainNavigationState extends State<mainNavigation> {
     }
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   void _onItemTaped(int index){
     setState((){
