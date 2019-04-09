@@ -5,6 +5,7 @@ import 'dart:core';
 import 'package:location/location.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'dart:io' show Platform;
 import 'package:device_info/device_info.dart';
 
 
@@ -34,10 +35,17 @@ class _mainNavigationState extends State<mainNavigation> {
   }
 
   void _getInfoData() async{
-    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-    print(iosInfo.identifierForVendor);
-    print(iosInfo.model);
-    print(iosInfo.systemName);
+    if (Platform.isAndroid){
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      print(androidInfo.display);
+      print(androidInfo.fingerprint);
+      print(androidInfo.androidId);
+    }
+    if (Platform.isIOS){
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      print(iosInfo.identifierForVendor);
+      print(iosInfo.model);
+    }
   }
 
   // pegar a localização atual
