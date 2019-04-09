@@ -34,9 +34,10 @@ class _mainNavigationState extends State<mainNavigation> {
   }
 
   void _getInfoData() async{
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    print(androidInfo.display);
-    print(androidInfo.fingerprint);
+    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    print(iosInfo.identifierForVendor);
+    print(iosInfo.model);
+    print(iosInfo.systemName);
   }
 
   // pegar a localização atual
