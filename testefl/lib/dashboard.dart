@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:testefl/models/person.dart';
-import 'package:location/location.dart';
-import 'dart:async';
-import 'package:flutter/services.dart';
 
 
 class dashboard extends StatefulWidget {

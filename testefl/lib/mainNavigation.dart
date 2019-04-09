@@ -48,12 +48,15 @@ class _mainNavigationState extends State<mainNavigation> {
       if (e.code == 'PERMISSION_DENIED') {
         error = 'Permission denied';
       }
+
       currentLocation = null;
     }
+    print(currentLocation.latitude);
+    print(currentLocation.longitude);
     return currentLocation;
   }
 
-  @override
+
   Widget callPage(int index){
     switch(index){
       case 0 : {
@@ -77,6 +80,8 @@ class _mainNavigationState extends State<mainNavigation> {
           color: Colors.red,
         );
       }
+      default:
+        return dashboard(pessoa: widget.pessoa);
     }
   }
 
