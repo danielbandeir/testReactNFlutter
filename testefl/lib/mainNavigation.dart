@@ -5,6 +5,7 @@ import 'dart:core';
 import 'package:location/location.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:device_info/device_info.dart';
 
 
 class mainNavigation extends StatefulWidget {
@@ -19,6 +20,7 @@ class mainNavigation extends StatefulWidget {
 }
 
 class _mainNavigationState extends State<mainNavigation> {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   int currentIndex = 1;
   LocationData currentLocation;
   var location = new Location();
@@ -28,6 +30,13 @@ class _mainNavigationState extends State<mainNavigation> {
   void initState() {
     super.initState();
     this._getCurrentLocation();
+    this._getInfoData();
+  }
+
+  void _getInfoData() async{
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    print(androidInfo.display);
+    print(androidInfo.fingerprint);
   }
 
   // pegar a localização atual

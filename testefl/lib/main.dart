@@ -39,6 +39,7 @@ class _LoginState extends State<Login> {
     this.getPersonData();
   }
 
+
   Future<String> getPersonData() async{
     var res = await http
         .get(Uri.encodeFull(urlApiPerson), headers: {"Accept":"application/json"});
