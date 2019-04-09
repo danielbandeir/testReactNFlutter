@@ -102,7 +102,7 @@ class _LoginState extends State<Login> {
       body: Stack(
         children: <Widget>[
           Image.network(
-            dataHotel[0]['background_image'],
+            "https://images.unsplash.com/photo-1521090029433-afd0d68460f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80",
             fit: BoxFit.cover,
             height: 2000.0,
           ),
@@ -122,7 +122,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  dataHotel[0]['nome'],
+                  "neue",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,

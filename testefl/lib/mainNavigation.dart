@@ -5,8 +5,7 @@ import 'dart:core';
 import 'package:location/location.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'dart:io' show Platform;
-import 'package:device_info/device_info.dart';
+import 'package:testefl/wall.dart';
 
 
 class mainNavigation extends StatefulWidget {
@@ -21,7 +20,6 @@ class mainNavigation extends StatefulWidget {
 }
 
 class _mainNavigationState extends State<mainNavigation> {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   int currentIndex = 1;
   LocationData currentLocation;
   var location = new Location();
@@ -31,22 +29,8 @@ class _mainNavigationState extends State<mainNavigation> {
   void initState() {
     super.initState();
     this._getCurrentLocation();
-    this._getInfoData();
   }
 
-  void _getInfoData() async{
-    if (Platform.isAndroid){
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      print(androidInfo.display);
-      print(androidInfo.fingerprint);
-      print(androidInfo.androidId);
-    }
-    if (Platform.isIOS){
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      print(iosInfo.identifierForVendor);
-      print(iosInfo.model);
-    }
-  }
 
   // pegar a localização atual
   Future<LocationData> _getCurrentLocation() async {
@@ -78,10 +62,7 @@ class _mainNavigationState extends State<mainNavigation> {
   Widget callPage(int index){
     switch(index){
       case 0 : {
-        return Container(
-          height: 2000,
-          color: Colors.black,
-        );
+        return wallProfile();
       }
       case 1: {
         return dashboard(pessoa: widget.pessoa);
