@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:testefl/dashboard.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:core';
@@ -38,7 +37,6 @@ class _LoginState extends State<Login> {
     super.initState();
     this.getHotelData();
     this.getPersonData();
-    print(pessoaLogada);
   }
 
   Future<String> getPersonData() async{

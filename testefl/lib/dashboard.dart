@@ -18,37 +18,10 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<dashboard> {
-  LocationData currentLocation;
-  var location = new Location();
-  String error;
 
   @override
   void initState(){
     super.initState();
-    this._getCurrentLocation();
-  }
-
-  // pegar a localização atual
-  Future<LocationData> _getCurrentLocation() async {
-    var permission = await location.hasPermission();
-
-    try {
-      if (permission == true){
-        currentLocation = await location.getLocation();
-      }
-      else{
-        location.requestPermission();
-        if (permission == true){
-          currentLocation = await location.getLocation();
-        }
-      }
-    } on PlatformException catch (e) {
-      if (e.code == 'PERMISSION_DENIED') {
-        error = 'Permission denied';
-      }
-      currentLocation = null;
-    }
-    return currentLocation;
   }
 
   @override
@@ -120,10 +93,6 @@ class _dashboardState extends State<dashboard> {
                                 ],
                               ),
                             ),
-                           Text(
-                             'Latitude: '+currentLocation.latitude.toString()+' - Longitude: '+currentLocation.longitude.toString(),
-                             style: TextStyle(color: Colors.white),
-                           ),
                          ],
                        ),
                        Column(

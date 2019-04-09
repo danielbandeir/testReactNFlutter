@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:testefl/dashboard.dart';
 import 'package:testefl/models/person.dart';
+import 'dart:core';
+import 'package:location/location.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
+
 
 class mainNavigation extends StatefulWidget {
 
@@ -15,36 +20,62 @@ class mainNavigation extends StatefulWidget {
 
 class _mainNavigationState extends State<mainNavigation> {
   int currentIndex = 1;
+  LocationData currentLocation;
+  var location = new Location();
+  String error;
 
   @override
   void initState() {
     super.initState();
+    this._getCurrentLocation();
   }
 
+  // pegar a localização atual
+  Future<LocationData> _getCurrentLocation() async {
+    var permission = await location.hasPermission();
+
+    try {
+      if (permission == true){
+        currentLocation = await location.getLocation();
+      }
+      else{
+        location.requestPermission();
+        if (permission == true){
+          currentLocation = await location.getLocation();
+        }
+      }
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        error = 'Permission denied';
+      }
+      currentLocation = null;
+    }
+    return currentLocation;
+  }
+
+  @override
   Widget callPage(int index){
     switch(index){
       case 0 : {
-        print('mural');
-        break;
+        return Container(
+          height: 2000,
+          color: Colors.black,
+        );
       }
       case 1: {
-        print('foi pra ca');
-        Navigator.push(
-          context,
-          // We'll create the SelectionScreen in the next step!
-          MaterialPageRoute(builder: (context) => dashboard(pessoa: widget.pessoa)));
-          break;
+        return dashboard(pessoa: widget.pessoa);
       }
       case 2: {
-        print('chat');
-        break;
+        return Container(
+          height: 2000,
+          color: Colors.yellow,
+        );
       }
       case 3:{
-        print('achivement');
-        break;
-      }
-      default:{
-        print('perfil');
+        return Container(
+          height: 2000,
+          color: Colors.red,
+        );
       }
     }
   }
@@ -52,12 +83,6 @@ class _mainNavigationState extends State<mainNavigation> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  void _onItemTaped(int index){
-    setState((){
-      currentIndex = index;
-    });
   }
 
 
@@ -72,7 +97,7 @@ class _mainNavigationState extends State<mainNavigation> {
         child:
         BottomNavigationBar(
           currentIndex: currentIndex,
-          onTap: _onItemTaped,
+          onTap: _setCurrentLabel,
             items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.dashboard), title: Text('')),
           BottomNavigationBarItem(icon: Icon(Icons.account_circle), title: Text('')),
@@ -81,6 +106,12 @@ class _mainNavigationState extends State<mainNavigation> {
         ]),
       ),
     );
+  }
+
+  void _setCurrentLabel(int index){
+    setState(() {
+      this.currentIndex = index;
+    });
   }
 }
 
