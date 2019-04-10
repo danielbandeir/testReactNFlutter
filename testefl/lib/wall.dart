@@ -34,6 +34,24 @@ class _wallProfileState extends State<wallProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Mural do Daniel",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor:  Colors.black,
+        elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search, color: Colors.white),
+            onPressed: null,
+          ),
+          IconButton(
+            icon: Icon(Icons.filter_list, color: Colors.white),
+            onPressed: null,
+          ),
+        ],
+      ),
       body: Stack(
         children: <Widget>[
           Container(
@@ -193,29 +211,7 @@ class _wallProfileState extends State<wallProfile> {
               );
             }
           ),
-          //App bar type
-          Column(
-            children: <Widget>[
-              AppBar(
-                title: Text(
-                  "Mural do Daniel",
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor:  Colors.transparent,
-                elevation: 0.0,
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.search, color: Colors.white),
-                    onPressed: null,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.filter_list, color: Colors.white),
-                    onPressed: null,
-                  ),
-                ],
-              ),
-            ],
-          ),
+
         ],
       ),
     );
