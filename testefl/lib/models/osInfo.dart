@@ -1,18 +1,9 @@
-import 'dart:io' show Platform;
-import 'package:device_info/device_info.dart';
-
 class osInfo {
-  String os = Platform.operatingSystem;
 
-  String idOS;
-  String versionOS;
-  String modelOS;
+  String osSystem;
+  String idOs;
+  String versionOs;
+  String modelOs;
 
-  osInfo(this.idOS, this.versionOS, this.modelOS);
-
-  String getIdOS() {
-
-  }
-
-  ;
+  osInfo(this.osSystem, this.idOs, this.modelOs, this.versionOs);
 }

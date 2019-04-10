@@ -6,10 +6,12 @@ import 'package:location/location.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:testefl/wall.dart';
+import 'package:testefl/models/osInfo.dart';
+import 'package:device_info/device_info.dart';
+import 'dart:io' show Platform;
 
 
 class mainNavigation extends StatefulWidget {
-
   final Person pessoa;
 
   @override
@@ -20,6 +22,9 @@ class mainNavigation extends StatefulWidget {
 }
 
 class _mainNavigationState extends State<mainNavigation> {
+  String os = Platform.operatingSystem;
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  osInfo device;
   int currentIndex = 1;
   LocationData currentLocation;
   var location = new Location();
@@ -29,8 +34,20 @@ class _mainNavigationState extends State<mainNavigation> {
   void initState() {
     super.initState();
     this._getCurrentLocation();
+    this.getDataDevice();
   }
 
+  Future<osInfo> getDataDevice() async{
+    if(this.os == 'android'){
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      print(androidInfo.androidId);
+      return this.device = new osInfo(this.os, androidInfo.androidId, androidInfo.model, androidInfo.version.toString());
+    }
+    if(this.os == 'ios'){
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      return this.device = new osInfo(this.os, iosInfo.identifierForVendor, iosInfo.model, iosInfo.systemVersion);
+    }
+  }
 
   // pegar a localização atual
   Future<LocationData> _getCurrentLocation() async {

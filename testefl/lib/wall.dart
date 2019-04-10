@@ -6,34 +6,12 @@ class wallProfile extends StatefulWidget {
 }
 
 class _wallProfileState extends State<wallProfile> {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  List device = [0];
 
   @override
   void initState() {
     super.initState();
-    this._getData();
   }
 
-
-  void _getData() async{
-    if (Platform.isAndroid){
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      this.device.add(androidInfo.androidId);
-      this.device.add(androidInfo.model);
-      this.device.add(androidInfo.device);
-      this.device.add(androidInfo.bootloader);
-      this.device.add(androidInfo.brand);
-      this.device.add(androidInfo.manufacturer);
-      this.device.add(androidInfo.product);
-      print(device);
-    }
-    if (Platform.isIOS){
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      print(iosInfo.identifierForVendor);
-      print(iosInfo.model);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +55,7 @@ class _wallProfileState extends State<wallProfile> {
                                             child: Column(
                                               children: <Widget>[
                                                 Text(
-                                                    "Android ID: "+device[1]+"\n"+"Modelo: "+device[2]+"\n"+"Device: "+device[3]+"\n"+"bootLoader: "+device[4]+"\n"+"Brand: "+device[5]+"\n"+"Monafacturer: "+device[6]+"\n"+"Product: "+device[7]
+                                                   "Testando"
                                                 ),
                                               ],
                                             ),
@@ -120,13 +98,43 @@ class _wallProfileState extends State<wallProfile> {
                                         ),
                                         Padding(
                                           padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                          child: Column(
+                                          child: Text(
+                                            'dsadsaTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTeTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandostandoTestando',
+                                            maxLines: 5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 100,
+                                          height: 40,
+                                          child: Row(
                                             children: <Widget>[
-                                              Row(
-                                                children: <Widget>[
-
-                                                ],
+                                              IconButton(
+                                                icon: Icon(Icons.favorite, color: Colors.red),
+                                                onPressed: null,
                                               ),
+                                              Text(
+                                                  "Curtido",
+                                              style: TextStyle(color: Colors.red),)
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 150,
+                                          height: 40,
+                                          child: Row(
+                                            children: <Widget>[
+                                              IconButton(
+                                                icon: Icon(Icons.comment, color: Colors.grey),
+                                                onPressed: null,
+                                              ),
+                                              Text("20 comentários")
                                             ],
                                           ),
                                         ),
