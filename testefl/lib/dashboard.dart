@@ -6,7 +6,6 @@ import 'package:testefl/models/person.dart';
 class dashboard extends StatefulWidget {
   final Person pessoa;
 
-
   dashboard({Key key, @required this.pessoa}) : super(key : key);
 
   @override

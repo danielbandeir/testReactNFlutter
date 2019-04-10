@@ -5,6 +5,7 @@ import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:testefl/models/person.dart';
 import 'package:testefl/mainNavigation.dart';
+import 'package:testefl/makeAcess.dart';
 
 void main() => runApp(MyApp());
 
@@ -232,23 +233,10 @@ class _LoginState extends State<Login> {
                       ),
                       FlatButton(
                         onPressed: (){
-                          return showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Container(
-                                  width: 300,
-                                  height: 40,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'Testando'
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => giveAcess(),
+                              )
                           );
                         },
                         textColor: Colors.white,

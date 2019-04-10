@@ -3,8 +3,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
+import 'package:testefl/models/person.dart';
 
 class wallProfile extends StatefulWidget {
+  final Person pessoa;
+
+  wallProfile({Key key, @required this.pessoa}) : super(key : key);
+
   @override
   _wallProfileState createState() => _wallProfileState();
 }
@@ -36,7 +41,7 @@ class _wallProfileState extends State<wallProfile> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Mural do Daniel",
+          "Mural "+widget.pessoa.nome,
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor:  Colors.black,

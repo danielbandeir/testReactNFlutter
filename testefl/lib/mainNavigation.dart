@@ -79,7 +79,7 @@ class _mainNavigationState extends State<mainNavigation> {
   Widget callPage(int index){
     switch(index){
       case 0 : {
-        return wallProfile();
+        return wallProfile(pessoa: widget.pessoa);
       }
       case 1: {
         return dashboard(pessoa: widget.pessoa);
