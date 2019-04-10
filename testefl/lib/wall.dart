@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:core';
+import 'package:http/http.dart' as http;
 
 class wallProfile extends StatefulWidget {
   @override
@@ -6,10 +10,24 @@ class wallProfile extends StatefulWidget {
 }
 
 class _wallProfileState extends State<wallProfile> {
+  List dataComment;
+  final String urlApiComments = "http://apigetrest.herokuapp.com/comentario/";
+
+
+  Future<String> getCommentData() async{
+    var res = await http
+        .get(Uri.encodeFull(urlApiComments), headers: {"Accept":"application/json"});
+
+    setState( (){
+      var resComment = json.decode(res.body);
+      dataComment = resComment["results"];
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    this.getCommentData();
   }
 
 
@@ -22,149 +40,158 @@ class _wallProfileState extends State<wallProfile> {
             height: 2000,
             color: Colors.black,
           ),
-          Column(
-            children: <Widget>[
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
+          ListView.builder(
+            itemCount: dataComment.length,
+            itemBuilder: (BuildContext context, int i) {
+              return Center(
                   child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                          color: Colors.white,
-                          width: MediaQuery.of(context).size.width-50,
-                          height: 200,
-                          child: Stack(
-                            children: <Widget>[
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                textDirection: TextDirection.rtl,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: Icon(Icons.more_vert, color: Colors.grey),
-                                    onPressed: (){
-                                      return showDialog(
+                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    child: Padding(
+                      padding: EdgeInsets.all(0.0),
+                      child: Column( //button more vertical for comment info
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                            color: Colors.white,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width - 50,
+                            height: 200,
+                            child: Stack(
+                              children: <Widget>[
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  textDirection: TextDirection.rtl,
+                                  children: <Widget>[
+                                    IconButton(
+                                      icon: Icon(
+                                          Icons.more_vert, color: Colors.grey),
+                                      onPressed: () {
+                                        return showDialog(
                                           context: context,
                                           builder: (context) {
-                                        return AlertDialog(
-                                          content: Container(
-                                            width: MediaQuery.of(context).size.width,
-                                            height: 150,
-                                            child: Column(
-                                              children: <Widget>[
-                                                Text(
-                                                   "Testando"
+                                            return AlertDialog(
+                                              content: Container(
+                                                width: MediaQuery
+                                                    .of(context)
+                                                    .size
+                                                    .width,
+                                                height: 150,
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Text(
+                                                        "Testando"
+                                                    ),
+                                                  ],
                                                 ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(15),
+                                      //alinhamento da imagem ícone do NOme user
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Container(
+                                                width: 40,
+                                                height: 40,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black,
+                                                  borderRadius: BorderRadius
+                                                      .circular(90),
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                        dataComment[i]['foto']
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding( //Padding da imagem do icone para o nome o usuário
+                                                padding: EdgeInsets.fromLTRB(
+                                                    20, 0, 0, 0),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment
+                                                      .start,
+                                                  children: <Widget>[
+                                                    Text(dataComment[i]['nomePessoa']),
+                                                    Text(dataComment[i]['tempo'])
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                            child: Text(
+                                              dataComment[i]['texto'],
+                                              maxLines: 5,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          10, 0, 10, 0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 100,
+                                            height: 40,
+                                            child: Row(
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon: Icon(Icons.favorite,
+                                                      color: Colors.red),
+                                                  onPressed: null,
+                                                ),
+                                                Text(
+                                                  "Curtido",
+                                                  style: TextStyle(
+                                                      color: Colors.red),)
                                               ],
                                             ),
                                           ),
-                                        );
-                                      },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: EdgeInsets.all(15),//alinhamento da imagem ícone do NOme user
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                color: Colors.black,
-                                                borderRadius: BorderRadius.circular(90),
-                                              ),
+                                          Container(
+                                            width: 150,
+                                            height: 40,
+                                            child: Row(
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon: Icon(Icons.comment,
+                                                      color: Colors.grey),
+                                                  onPressed: null,
+                                                ),
+                                                Text("20 comentários")
+                                              ],
                                             ),
-                                            Padding( //Padding da imagem do icone para o nome o usuário
-                                              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Text('Daniel B.'),
-                                                  Text('15 minutos atrás')
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                          child: Text(
-                                            'dsadsaTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTeTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandoTestandostandoTestando',
-                                            maxLines: 5,
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 100,
-                                          height: 40,
-                                          child: Row(
-                                            children: <Widget>[
-                                              IconButton(
-                                                icon: Icon(Icons.favorite, color: Colors.red),
-                                                onPressed: null,
-                                              ),
-                                              Text(
-                                                  "Curtido",
-                                              style: TextStyle(color: Colors.red),)
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 150,
-                                          height: 40,
-                                          child: Row(
-                                            children: <Widget>[
-                                              IconButton(
-                                                icon: Icon(Icons.comment, color: Colors.grey),
-                                                onPressed: null,
-                                              ),
-                                              Text("20 comentários")
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                          color: Colors.yellow,
-                          width: MediaQuery.of(context).size.width-50,
-                          height: 150,
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                          color: Colors.yellow,
-                          width: MediaQuery.of(context).size.width-50,
-                          height: 150,
-                        ),
-
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ),
-            ],
+                  )
+              );
+            }
           ),
           //App bar type
           Column(

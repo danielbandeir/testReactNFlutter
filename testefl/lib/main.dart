@@ -77,16 +77,9 @@ class _LoginState extends State<Login> {
             pessoaLogada = new Person(this.dataPerson[i]['url'], this.dataPerson[i]['nome'], this.dataPerson[i]['senha'], this.dataPerson[i]['description'], this.dataPerson[i]['cidade'], this.dataPerson[i]['estado'], this.dataPerson[i]['foto']);
             return true;
           }
-          else{
-
-            return false;
-          }
-        }
-        else {
-          return false;
         }
       }
-
+      return false;
  }
 
   @override

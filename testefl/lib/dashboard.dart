@@ -4,7 +4,6 @@ import 'package:testefl/models/person.dart';
 
 
 class dashboard extends StatefulWidget {
-
   final Person pessoa;
 
 
