@@ -18,6 +18,7 @@ class _giveAcessState extends State<giveAcess> {
     super.initState();
   }
 
+
 _getAcess() async {
     var permission = await location.hasPermission();
 
@@ -29,7 +30,7 @@ _getAcess() async {
         }
       }
       else{
-        print('Parabéns, acesso feito');
+        print("Acesso requerido");
       }
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {

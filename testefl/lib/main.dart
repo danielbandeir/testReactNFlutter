@@ -32,6 +32,9 @@ class _LoginState extends State<Login> {
   Person pessoaLogada;
   final String urlApiHotel = "https://apigetrest.herokuapp.com/hotel/";
   final String urlApiPerson = "https://apigetrest.herokuapp.com/pessoa/";
+  final controllerTextLogin = TextEditingController();
+  final controllerPasswordLogin = TextEditingController();
+
 
   @override
   void initState(){
@@ -60,10 +63,6 @@ class _LoginState extends State<Login> {
       dataHotel = resBody["results"];
     });
   }
-
-  final controllerTextLogin = TextEditingController();
-  final controllerPasswordLogin = TextEditingController();
-
 
 //verifica se o usuário digitado existe e passa os dados de login caso ele exista, sem precisar chamar novamente o JSON.
  bool verifyIfUserExist(){

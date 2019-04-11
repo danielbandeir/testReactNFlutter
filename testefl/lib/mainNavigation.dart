@@ -113,18 +113,19 @@ class _mainNavigationState extends State<mainNavigation> {
       body: callPage(currentIndex),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
-            canvasColor: Colors.black
+            canvasColor: Colors.black,
         ),
         child:
         BottomNavigationBar(
           currentIndex: currentIndex,
           onTap: _setCurrentLabel,
-            items: <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.dashboard), title: Text('')),
           BottomNavigationBarItem(icon: Icon(Icons.account_circle), title: Text('')),
           BottomNavigationBarItem(icon: Icon(Icons.chat_bubble_outline), title: Text('')),
-          BottomNavigationBarItem(icon: Icon(Icons.perm_media), title: Text('')),
-        ]),
+          BottomNavigationBarItem(icon: Icon(Icons.group), title: Text('')),
+        ],
+          fixedColor: Colors.black),
       ),
     );
   }

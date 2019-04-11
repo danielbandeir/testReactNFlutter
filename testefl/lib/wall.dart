@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:testefl/models/person.dart';
+import 'package:testefl/models/comments.dart';
 
 class wallProfile extends StatefulWidget {
   final Person pessoa;
@@ -15,6 +16,7 @@ class wallProfile extends StatefulWidget {
 }
 
 class _wallProfileState extends State<wallProfile> {
+  int lengthComments;
   List dataComment;
   final String urlApiComments = "http://apigetrest.herokuapp.com/comentario/";
 
@@ -26,13 +28,170 @@ class _wallProfileState extends State<wallProfile> {
     setState( (){
       var resComment = json.decode(res.body);
       dataComment = resComment["results"];
+      lengthComments = dataComment.length;
     });
   }
 
   @override
   void initState() {
-    super.initState();
     this.getCommentData();
+    super.initState();
+  }
+
+  Widget listComments(){
+    return          ListView.builder(
+        itemCount: dataComment.length,
+        itemBuilder: (BuildContext context, int i) {
+          return Center(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                child: Padding(
+                  padding: EdgeInsets.all(0.0),
+                  child: Column( //button more vertical for comment info
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                        color: Colors.white,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width - 50,
+                        height: 200,
+                        child: Stack(
+                          children: <Widget>[
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              textDirection: TextDirection.rtl,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(
+                                      Icons.more_vert, color: Colors.grey),
+                                  onPressed: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Container(
+                                            width: MediaQuery
+                                                .of(context)
+                                                .size
+                                                .width,
+                                            height: 150,
+                                            child: Column(
+                                              children: <Widget>[
+                                                Text(
+                                                    "Testando"
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(15),
+                                  //alinhamento da imagem ícone do NOme user
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius: BorderRadius
+                                                  .circular(90),
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                    dataComment[i]['foto']
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding( //Padding da imagem do icone para o nome o usuário
+                                            padding: EdgeInsets.fromLTRB(
+                                                20, 0, 0, 0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment
+                                                  .start,
+                                              children: <Widget>[
+                                                Text(dataComment[i]['nomePessoa']),
+                                                Text(dataComment[i]['tempo'])
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                        child: Text(
+                                          dataComment[i]['texto'],
+                                          maxLines: 5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      10, 0, 10, 0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: 100,
+                                        height: 40,
+                                        child: Row(
+                                          children: <Widget>[
+                                            IconButton(
+                                              icon: Icon(Icons.favorite,
+                                                  color: Colors.red),
+                                              onPressed: null,
+                                            ),
+                                            Text(
+                                              "Curtido",
+                                              style: TextStyle(
+                                                  color: Colors.red),)
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 150,
+                                        height: 40,
+                                        child: Row(
+                                          children: <Widget>[
+                                            IconButton(
+                                              icon: Icon(Icons.comment,
+                                                  color: Colors.grey),
+                                              onPressed: null,
+                                            ),
+                                            Text("20 comentários")
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+          );
+        }
+    );
   }
 
 
@@ -63,160 +222,9 @@ class _wallProfileState extends State<wallProfile> {
             height: 2000,
             color: Colors.black,
           ),
-          ListView.builder(
-            itemCount: dataComment.length,
-            itemBuilder: (BuildContext context, int i) {
-              return Center(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: Column( //button more vertical for comment info
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                            color: Colors.white,
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width - 50,
-                            height: 200,
-                            child: Stack(
-                              children: <Widget>[
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  textDirection: TextDirection.rtl,
-                                  children: <Widget>[
-                                    IconButton(
-                                      icon: Icon(
-                                          Icons.more_vert, color: Colors.grey),
-                                      onPressed: () {
-                                        return showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              content: Container(
-                                                width: MediaQuery
-                                                    .of(context)
-                                                    .size
-                                                    .width,
-                                                height: 150,
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    Text(
-                                                        "Testando"
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.all(15),
-                                      //alinhamento da imagem ícone do NOme user
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              Container(
-                                                width: 40,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius: BorderRadius
-                                                      .circular(90),
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: NetworkImage(
-                                                        dataComment[i]['foto']
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding( //Padding da imagem do icone para o nome o usuário
-                                                padding: EdgeInsets.fromLTRB(
-                                                    20, 0, 0, 0),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment
-                                                      .start,
-                                                  children: <Widget>[
-                                                    Text(dataComment[i]['nomePessoa']),
-                                                    Text(dataComment[i]['tempo'])
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                            child: Text(
-                                              dataComment[i]['texto'],
-                                              maxLines: 5,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          10, 0, 10, 0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 100,
-                                            height: 40,
-                                            child: Row(
-                                              children: <Widget>[
-                                                IconButton(
-                                                  icon: Icon(Icons.favorite,
-                                                      color: Colors.red),
-                                                  onPressed: null,
-                                                ),
-                                                Text(
-                                                  "Curtido",
-                                                  style: TextStyle(
-                                                      color: Colors.red),)
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 150,
-                                            height: 40,
-                                            child: Row(
-                                              children: <Widget>[
-                                                IconButton(
-                                                  icon: Icon(Icons.comment,
-                                                      color: Colors.grey),
-                                                  onPressed: null,
-                                                ),
-                                                Text("20 comentários")
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-              );
-            }
+          Container(
+            child: dataComment != null ? listComments() : Center(child: CircularProgressIndicator()),
           ),
-
         ],
       ),
     );
