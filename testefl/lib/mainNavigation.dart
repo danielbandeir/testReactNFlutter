@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:testefl/wall.dart';
 import 'package:testefl/models/osInfo.dart';
 import 'package:device_info/device_info.dart';
+import 'package:testefl/seeProfile.dart';
 import 'dart:io' show Platform;
 
 
@@ -91,10 +92,7 @@ class _mainNavigationState extends State<mainNavigation> {
         );
       }
       case 3:{
-        return Container(
-          height: 2000,
-          color: Colors.red,
-        );
+        return seeProfile();
       }
       default:
         return dashboard(pessoa: widget.pessoa);

@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:testefl/models/person.dart';
-import 'package:testefl/models/comments.dart';
 
 class wallProfile extends StatefulWidget {
   final Person pessoa;

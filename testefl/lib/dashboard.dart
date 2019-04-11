@@ -265,7 +265,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
                     children: <Widget>[
                       Container(
                         width: 1000,
-                        height: MediaQuery.of(context).size.height*0.1,
+                        height: MediaQuery.of(context).size.height < 500 ? MediaQuery.of(context).size.height*0.2 : MediaQuery.of(context).size.height*0.1,
                         color: Color.fromRGBO(20, 20, 20, 1),
                         child: Row(
                           children: <Widget>[
