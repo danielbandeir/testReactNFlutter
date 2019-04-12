@@ -29,28 +29,33 @@ class _seeProfileState extends State<seeProfile> {
     });
   }
 
-  List<Widget> listAmigosEmComum(BuildContext context){
-    var instanceFriends = new List<Widget>();
-    int i = 0;
-
-  }
-
   //Widget com listView que pega todos os amigos em comum
-  Widget amigosEmComum(){
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-          child: Container(
-            height: 2000,
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: friends != null ? listAmigosEmComum(context) : <Widget>[CircularProgressIndicator()],
+  List<Widget> amigosEmComum(int numberPersonsPerRow){
+    var persons = new List<Widget>();
+
+        for(int i =0; i<friends.length;i++){
+          persons.add(
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width/(numberPersonsPerRow+1),
+                  height: MediaQuery.of(context).size.width/(numberPersonsPerRow+1),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-      ],
-    );
+        );
+
+        }
+
+        return persons;
+
   }
 
   @override
@@ -63,12 +68,12 @@ class _seeProfileState extends State<seeProfile> {
           Image.network(
             "https://images.unsplash.com/photo-1521090029433-afd0d68460f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80",
             fit: BoxFit.cover,
-            height: 2000.0,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
           ),
-          amigosEmComum(),
           Container(
-            height: 3000.0,
-            width: 3000.0,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -78,6 +83,11 @@ class _seeProfileState extends State<seeProfile> {
             ),
           ),
           //App bar type
+          ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: friends != null ? amigosEmComum(3) : <Widget>[CircularProgressIndicator()],
+          ),
           Column(
             children: <Widget>[
               AppBar(
