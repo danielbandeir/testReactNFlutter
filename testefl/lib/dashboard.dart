@@ -227,6 +227,78 @@ List<Widget> listAmigosEmComum(BuildContext context){
     );
   }
 
+  //Name, description button chat
+  Widget NameDescriptionAndContent(){
+    return Container(
+      height: MediaQuery.of(context).size.height < 500 ? MediaQuery.of(context).size.height*0.2 : MediaQuery.of(context).size.height*0.1,
+      color: Color.fromRGBO(20, 20, 20, 1),
+      child: Row(
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child:
+                Text(
+                  widget.pessoa.nome,
+                  style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w400),
+                ),
+              ),
+              Padding(
+                padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child:
+                Row(
+                  children: <Widget>[
+                    Text(
+                      ' '+widget.pessoa.description+' ',
+                      style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
+                    ),
+                    Text(
+                      ' '+widget.pessoa.cidade+' ',
+                      style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
+                    ),
+                    Text(
+                      '  -  '+widget.pessoa.estado,
+                      style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Padding(
+                padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(40, 0, 0, 0),
+                child:
+                FlatButton(
+                  onPressed: () {},
+                  child: Container(
+                    width: MediaQuery.of(context).size.width<400 ? 50: 70,
+                    height: MediaQuery.of(context).size.width<400 ? 50: 70,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(90.0),
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color.fromRGBO(243,195,16, 1), Color.fromRGBO(233, 151, 4, 1)]
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.chat_bubble_outline,
+                      size: MediaQuery.of(context).size.width<400 ? 22: 32,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -259,81 +331,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
                       ),
                     ],
                   ),
-
-                  //Name, description button chat
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: 1000,
-                        height: MediaQuery.of(context).size.height < 500 ? MediaQuery.of(context).size.height*0.2 : MediaQuery.of(context).size.height*0.1,
-                        color: Color.fromRGBO(20, 20, 20, 1),
-                        child: Row(
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child:
-                                  Text(
-                                    widget.pessoa.nome,
-                                    style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w400),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child:
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        ' '+widget.pessoa.description+' ',
-                                        style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        ' '+widget.pessoa.cidade+' ',
-                                        style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        '  -  '+widget.pessoa.estado,
-                                        style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: MediaQuery.of(context).size.width < 400 ? EdgeInsets.fromLTRB(1, 0, 0, 0) : EdgeInsets.fromLTRB(40, 0, 0, 0),
-                                  child:
-                                  FlatButton(
-                                    onPressed: () {},
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width<400 ? 50: 70,
-                                      height: MediaQuery.of(context).size.width<400 ? 50: 70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(90.0),
-                                        gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [Color.fromRGBO(243,195,16, 1), Color.fromRGBO(233, 151, 4, 1)]
-                                        ),
-                                      ),
-                                      child: Icon(
-                                        Icons.chat_bubble_outline,
-                                        size: MediaQuery.of(context).size.width<400 ? 22: 32,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  NameDescriptionAndContent(),
                   interessesPessoais(),
                   amigosEmComum(),
                 ],
