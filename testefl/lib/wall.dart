@@ -15,7 +15,6 @@ class wallProfile extends StatefulWidget {
 }
 
 class _wallProfileState extends State<wallProfile> {
-  int lengthComments;
   List dataComment;
   final String urlApiComments = "http://apigetrest.herokuapp.com/comentario/";
 
@@ -27,7 +26,6 @@ class _wallProfileState extends State<wallProfile> {
     setState( (){
       var resComment = json.decode(res.body);
       dataComment = resComment["results"];
-      lengthComments = dataComment.length;
     });
   }
 
@@ -38,7 +36,7 @@ class _wallProfileState extends State<wallProfile> {
   }
 
   Widget listComments(){
-    return          ListView.builder(
+    return ListView.builder(
         itemCount: dataComment.length,
         itemBuilder: (BuildContext context, int i) {
           return Center(
