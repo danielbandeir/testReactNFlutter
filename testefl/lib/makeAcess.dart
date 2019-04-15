@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:flutter/services.dart';
 import 'package:testefl/main.dart';
+import 'package:testefl/customAssets/customColorMakeAcess.dart';
 
 class giveAcess extends StatefulWidget {
   @override
@@ -30,7 +31,8 @@ _getAcess() async {
         }
       }
       else{
-        print("Acesso requerido");
+        print('entrou aq');
+        main();
       }
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
@@ -71,13 +73,13 @@ _getAcess() async {
                   children: <Widget>[
                     Text(
                       'Como funciona?',
-                      style: TextStyle(color: Colors.white, fontSize: 36),
+                      style: TextStyle(color: customColor().white, fontSize: 36),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 20, 10, 300),
                       child: Text(
                         'Nós utilizamos a localização do seu dispositivo para conectá-lo com os hóspedes do Neue',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        style: TextStyle(color: customColor().white, fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -86,12 +88,12 @@ _getAcess() async {
               ),
               Text(
                 'Além disso, você precisa estar conectado à internet para participar da comunidade.',
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: TextStyle(color: customColor().white, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
               FlatButton(
                 onPressed: _getAcess,
-                textColor: Colors.white,
+                textColor: customColor().white,
                 padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: Container(
                   alignment: Alignment.center,
@@ -102,18 +104,26 @@ _getAcess() async {
                     gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [Color.fromRGBO(243,195,16, 1), Color.fromRGBO(233, 151, 4, 1)]
+                        colors: [customColor().firstYellowGradient, customColor().secondYellowGradient]
                     ),
                   ),
                   child: Text(
                     'TUDO CERTO. VAMOS COMEÇAR!',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: customColor().black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
+              ),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              AppBar(
+                elevation: 0.0,
+                backgroundColor: Colors.transparent,
               ),
             ],
           ),
