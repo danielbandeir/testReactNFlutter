@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:testefl/models/person.dart';
+import 'package:testefl/customAssets/customColorWall.dart';
 
 class wallProfile extends StatefulWidget {
   final Person pessoa;
@@ -48,7 +49,7 @@ class _wallProfileState extends State<wallProfile> {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        color: Colors.white,
+                        color: customColor().white,
                         width: MediaQuery
                             .of(context)
                             .size
@@ -62,7 +63,7 @@ class _wallProfileState extends State<wallProfile> {
                               children: <Widget>[
                                 IconButton(
                                   icon: Icon(
-                                      Icons.more_vert, color: Colors.grey),
+                                      Icons.more_vert, color: customColor().grey),
                                   onPressed: () {
                                     return showDialog(
                                       context: context,
@@ -103,7 +104,7 @@ class _wallProfileState extends State<wallProfile> {
                                             width: 40,
                                             height: 40,
                                             decoration: BoxDecoration(
-                                              color: Colors.black,
+                                              color: customColor().black,
                                               borderRadius: BorderRadius
                                                   .circular(90),
                                               image: DecorationImage(
@@ -150,13 +151,13 @@ class _wallProfileState extends State<wallProfile> {
                                           children: <Widget>[
                                             IconButton(
                                               icon: Icon(Icons.favorite,
-                                                  color: Colors.red),
+                                                  color: customColor().red),
                                               onPressed: null,
                                             ),
                                             Text(
                                               "Curtido",
                                               style: TextStyle(
-                                                  color: Colors.red),)
+                                                  color: customColor().red),)
                                           ],
                                         ),
                                       ),
@@ -167,7 +168,7 @@ class _wallProfileState extends State<wallProfile> {
                                           children: <Widget>[
                                             IconButton(
                                               icon: Icon(Icons.comment,
-                                                  color: Colors.grey),
+                                                  color: customColor().grey),
                                               onPressed: null,
                                             ),
                                             Text("20 comentários")
@@ -198,17 +199,17 @@ class _wallProfileState extends State<wallProfile> {
       appBar: AppBar(
         title: Text(
           "Mural "+widget.pessoa.nome,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: customColor().white),
         ),
-        backgroundColor:  Colors.black,
+        backgroundColor:  customColor().black,
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search, color: Colors.white),
+            icon: Icon(Icons.search, color: customColor().white),
             onPressed: null,
           ),
           IconButton(
-            icon: Icon(Icons.filter_list, color: Colors.white),
+            icon: Icon(Icons.filter_list, color: customColor().white),
             onPressed: null,
           ),
         ],
@@ -217,7 +218,7 @@ class _wallProfileState extends State<wallProfile> {
         children: <Widget>[
           Container(
             height: 2000,
-            color: Colors.black,
+            color: customColor().black,
           ),
           Container(
             child: dataComment != null ? listComments() : Center(child: CircularProgressIndicator()),
