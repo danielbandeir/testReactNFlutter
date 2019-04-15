@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:testefl/models/person.dart';
 import 'package:testefl/mainNavigation.dart';
 import 'package:testefl/makeAcess.dart';
+import 'package:testefl/customAssets/customColorMain.dart';
 
 void main() => runApp(MyApp());
 
@@ -125,7 +126,7 @@ class _LoginState extends State<Login> {
                         "neue",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: customColor().white,
                           fontSize: 72.0,
                           fontWeight: FontWeight.w200,
                           letterSpacing: 30.0,
@@ -135,7 +136,7 @@ class _LoginState extends State<Login> {
                         'HOTEL BOUTIQUE - LIFESTYLE',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: customColor().white,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w300,
                           letterSpacing: 2.0,
@@ -150,33 +151,33 @@ class _LoginState extends State<Login> {
                           children: <Widget>[
                             Theme(
                               data: ThemeData(
-                                  hintColor: Colors.white
+                                  hintColor: customColor().white
                               ),
                               child:
                               TextField(
                                 controller: controllerTextLogin,
-                                style: TextStyle(color: Colors.white,),
+                                style: TextStyle(color: customColor().white,),
                                 decoration: InputDecoration(
-                                    icon: Icon(Icons.account_circle, color: Colors.white),
+                                    icon: Icon(Icons.account_circle, color: customColor().white),
                                     hintText: 'Digite seu e-mail',
                                     hintStyle: TextStyle(
-                                        color: Colors.white,
+                                        color: customColor().white,
                                         fontWeight: FontWeight.w200)
                                 ),
                               ),
                             ),Theme(
                               data: ThemeData(
-                                  hintColor: Colors.white
+                                  hintColor: customColor().white
                               ),
                               child:
                               TextField(
                                 controller: controllerPasswordLogin,
-                                style: TextStyle(color: Colors.white,),
+                                style: TextStyle(color: customColor().white,),
                                 decoration: InputDecoration(
-                                    icon: Icon(Icons.lock, color: Colors.white),
+                                    icon: Icon(Icons.lock, color: customColor().white),
                                     hintText: 'Digite sua senha',
                                     hintStyle: TextStyle(
-                                        color: Colors.white,
+                                        color: customColor().white,
                                         fontWeight: FontWeight.w200)
                                 ),
                                 obscureText: true,
@@ -212,7 +213,7 @@ class _LoginState extends State<Login> {
                                   );
                                 }
                               },
-                              textColor: Colors.white,
+                              textColor: customColor().white,
                               padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                               child: Container(
                                 alignment: Alignment.center,
@@ -223,13 +224,13 @@ class _LoginState extends State<Login> {
                                   gradient: LinearGradient(
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
-                                      colors: [Color.fromRGBO(243,195,16, 1), Color.fromRGBO(233, 151, 4, 1)]
+                                      colors: [customColor().firstYellowGradient, customColor().secondYellowGradient]
                                   ),
                                 ),
                                 child: Text(
                                   'Entrar',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: customColor().white,
                                     fontSize: 22,
                                     fontWeight: FontWeight.normal,
                                     letterSpacing: 5.0,
@@ -245,7 +246,7 @@ class _LoginState extends State<Login> {
                                     )
                                 );
                               },
-                              textColor: Colors.white,
+                              textColor: customColor().white,
                               padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                               child: Container(
                                 alignment: Alignment.center,
@@ -262,7 +263,7 @@ class _LoginState extends State<Login> {
                                 child: Text(
                                   'ENTRAR COM FACEBOOK',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: customColor().white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),

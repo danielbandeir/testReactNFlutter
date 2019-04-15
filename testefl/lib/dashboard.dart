@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:core';
 import 'package:http/http.dart' as http;
-
+import 'package:testefl/customAssets/customColorDashboard.dart';
 
 class dashboard extends StatefulWidget {
   final Person pessoa;
@@ -68,13 +68,13 @@ class _dashboardState extends State<dashboard> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Center(
-                      child: Text(interests[i]['nome'], style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),),
+                      child: Text(interests[i]['nome'], style: TextStyle(color: customColor().white, fontWeight: FontWeight.w300),),
                     ),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(40),
-                      border: Border.all(color: Colors.white ,width: 1)
+                      border: Border.all(color: customColor().white ,width: 1)
                   ),
                 ),
               ),
@@ -85,13 +85,13 @@ class _dashboardState extends State<dashboard> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Center(
-                      child: Text(interests[i+1]['nome'], style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),),
+                      child: Text(interests[i+1]['nome'], style: TextStyle(color: customColor().white, fontWeight: FontWeight.w300),),
                     ),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(40),
-                      border: Border.all(color: Colors.white ,width: 1)
+                      border: Border.all(color: customColor().white ,width: 1)
                   ),
                 ),
               )
@@ -111,13 +111,13 @@ class _dashboardState extends State<dashboard> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Center(
-                      child: Text(interests[i]['nome'], style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),),
+                      child: Text(interests[i]['nome'], style: TextStyle(color: customColor().white, fontWeight: FontWeight.w300),),
                     ),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(40),
-                      border: Border.all(color: Colors.white ,width: 1)
+                      border: Border.all(color: customColor().white ,width: 1)
                   ),
                 ),
               ),
@@ -143,7 +143,7 @@ class _dashboardState extends State<dashboard> {
                 children: <Widget>[
                   Text(
                       "Interesses na cidade",
-                      style: TextStyle(color: Colors.grey, fontSize: 16)
+                      style: TextStyle(color: customColor().grey, fontSize: 16)
                   ),
                 ],
               ),
@@ -177,7 +177,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
                 width: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(90),
-                  color: Colors.yellow,
+                  color: customColor().black,
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(friends[i]['foto']),
@@ -205,7 +205,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
                 children: <Widget>[
                   Text(
                       "Amigos em comum",
-                      style: TextStyle(color: Colors.grey, fontSize: 16)
+                      style: TextStyle(color: customColor().grey, fontSize: 16)
                   ),
                 ],
               ),
@@ -238,7 +238,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
               child:
               Text(
                 widget.pessoa.nome,
-                style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w400),
+                style: TextStyle(fontSize: 32, color: customColor().white, fontWeight: FontWeight.w400),
               ),
             ),
             Padding(
@@ -248,15 +248,15 @@ List<Widget> listAmigosEmComum(BuildContext context){
                 children: <Widget>[
                   Text(
                     ' '+widget.pessoa.description+' ',
-                    style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
+                    style: TextStyle(fontSize: 13, color: customColor().white, fontWeight: FontWeight.w400),
                   ),
                   Text(
                     ' '+widget.pessoa.cidade+' ',
-                    style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
+                    style: TextStyle(fontSize: 13, color: customColor().white, fontWeight: FontWeight.w400),
                   ),
                   Text(
                     '  -  '+widget.pessoa.estado,
-                    style: TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w400),
+                    style: TextStyle(fontSize: 13, color: customColor().white, fontWeight: FontWeight.w400),
                   )
                 ],
               ),
@@ -278,7 +278,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
                     gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [Color.fromRGBO(243,195,16, 1), Color.fromRGBO(233, 151, 4, 1)]
+                        colors: [customColor().firstYellowGradient, customColor().secondYellowGradient]
                     ),
                   ),
                   child: Icon(
@@ -297,7 +297,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(20, 20, 20, 1),
+      backgroundColor: customColor().primaryBackgroundGreyColor,
       body: ListView(
         shrinkWrap: true,
         children: <Widget>[
@@ -320,7 +320,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
                             gradient: LinearGradient(
                                 begin: Alignment(0,0.01),
                                 end: Alignment.bottomCenter,
-                                colors:[Color.fromRGBO(10, 10, 10, 0.2), Color.fromRGBO(20, 20, 20, 1)]
+                                colors:[Color.fromRGBO(10, 10, 10, 0.2), customColor().primaryBackgroundGreyColor]
                             )
                         ),
                       ),
@@ -328,7 +328,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height < 500 ? MediaQuery.of(context).size.height*0.2 : MediaQuery.of(context).size.height*0.1,
-                    color: Color.fromRGBO(20, 20, 20, 1),
+                    color: customColor().primaryBackgroundGreyColor,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
@@ -349,7 +349,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
                     elevation: 0.0,
                     actions: <Widget>[
                       IconButton(
-                        icon: Icon(Icons.more_vert, color: Colors.white),
+                        icon: Icon(Icons.more_vert, color: customColor().white),
                         onPressed: null,
                       ),
                     ],
