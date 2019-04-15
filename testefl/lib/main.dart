@@ -29,6 +29,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool haveInternet;
   List dataHotel;
   List dataPerson;
   Person pessoaLogada;
@@ -44,9 +45,6 @@ class _LoginState extends State<Login> {
       print('tem internet');
       this.getHotelData();
       this.getPersonData();
-      if(dataPerson == null){
-        print('entrou aq');
-      }
       super.initState();
     } catch (e) {
       print(e.toString());
@@ -65,13 +63,24 @@ class _LoginState extends State<Login> {
   }
 
   Future<String> getHotelData() async{
-    var res = await http
-        .get(Uri.encodeFull(urlApiHotel), headers: {"Accept":"application/json"});
+
+    try{
+      var res = await http
+          .get(Uri.encodeFull(urlApiHotel), headers: {"Accept":"application/json"});
 
       setState(() {
         var resBody = json.decode(res.body);
         dataHotel = resBody["results"];
+        print('entrou');
+        haveInternet = true;
+        print('haveinternet é '+haveInternet.toString());
       });
+
+    } catch(e){
+      setState((){
+        haveInternet = false;
+      });
+    }
 
   }
 
@@ -102,6 +111,28 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: haveInternet ? sucess : errorSomethingWrongWith()
+    );
+  }
+
+  Widget errorSomethingWrongWith(){
+    return Scaffold(
+      backgroundColor: customColor().white,
+      body: Stack(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Eita, algo deu errado')
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget sucess(){
+    return Scaffold(
       body: Stack(
         children: <Widget>[
           //Image Background
@@ -117,9 +148,9 @@ class _LoginState extends State<Login> {
             width: 3000.0,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color.fromRGBO(10, 10, 10, 0.5), Color.fromRGBO(20, 20, 20, 1)]
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color.fromRGBO(10, 10, 10, 0.5), Color.fromRGBO(20, 20, 20, 1)]
               ),
             ),
           ),
@@ -293,5 +324,7 @@ class _LoginState extends State<Login> {
         ],
       ),
     );
+
   }
+
 }
