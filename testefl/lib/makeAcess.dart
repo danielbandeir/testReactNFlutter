@@ -20,7 +20,7 @@ class _giveAcessState extends State<giveAcess> {
   }
 
 
-_getAcess() async {
+Future<Widget> _getAcess() async {
     var permission = await location.hasPermission();
 
     try{
@@ -32,7 +32,7 @@ _getAcess() async {
       }
       else{
         print('entrou aq');
-        main();
+        return Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
       }
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {

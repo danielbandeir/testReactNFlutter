@@ -7,6 +7,7 @@ import 'package:testefl/models/person.dart';
 import 'package:testefl/mainNavigation.dart';
 import 'package:testefl/makeAcess.dart';
 import 'package:testefl/customAssets/customColorMain.dart';
+import 'package:testefl/error.dart';
 
 void main() => runApp(MyApp());
 
@@ -39,9 +40,17 @@ class _LoginState extends State<Login> {
 
   @override
   void initState(){
-    super.initState();
-    this.getHotelData();
-    this.getPersonData();
+    try{
+      print('tem internet');
+      this.getHotelData();
+      this.getPersonData();
+      if(dataPerson == null){
+        print('entrou aq');
+      }
+      super.initState();
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
 
@@ -59,10 +68,11 @@ class _LoginState extends State<Login> {
     var res = await http
         .get(Uri.encodeFull(urlApiHotel), headers: {"Accept":"application/json"});
 
-    setState(() {
-      var resBody = json.decode(res.body);
-      dataHotel = resBody["results"];
-    });
+      setState(() {
+        var resBody = json.decode(res.body);
+        dataHotel = resBody["results"];
+      });
+
   }
 
 //verifica se o usuário digitado existe e passa os dados de login caso ele exista, sem precisar chamar novamente o JSON.
