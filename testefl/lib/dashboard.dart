@@ -26,7 +26,6 @@ class _dashboardState extends State<dashboard> {
 
   @override
   void initState(){
-    SystemChrome.setEnabledSystemUIOverlays([]);
     this.getInterests();
     this.getFriends();
     super.initState();

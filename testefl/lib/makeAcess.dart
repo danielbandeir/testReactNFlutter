@@ -27,12 +27,12 @@ Future<Widget> _getAcess() async {
       if(permission==false){
         while (permission==false){
           await location.requestPermission();
+          await location.requestService();
           permission = await location.hasPermission();
+          if(permission == true){
+            return Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+          }
         }
-      }
-      else{
-        print('entrou aq');
-        return Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
       }
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {

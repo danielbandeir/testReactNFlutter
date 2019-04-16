@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:core';
+import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 import 'package:testefl/models/person.dart';
 import 'package:testefl/mainNavigation.dart';
@@ -29,6 +30,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  var currentLocation = LocationData;
+  var location = new Location();
+  bool verifyIfHavePermission;
   bool haveInternet  = true;
   List dataHotel;
   List dataPerson;
@@ -52,6 +56,7 @@ class _LoginState extends State<Login> {
 
 
   Future<String> getPersonData() async{
+    this.verifyIfHavePermission = await location.hasPermission();
     var res = await http
         .get(Uri.encodeFull(urlApiPerson), headers: {"Accept":"application/json"});
 
@@ -103,6 +108,7 @@ class _LoginState extends State<Login> {
   @override
   void dispose(){
     controllerTextLogin.dispose();
+    controllerPasswordLogin.dispose();
     super.dispose();
   }
 
@@ -210,11 +216,21 @@ class _LoginState extends State<Login> {
                               onPressed: (){
                                 if (this.verifyIfUserExist()){
                                   try{
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => mainNavigation(pessoa: this.pessoaLogada),
-                                        )
-                                    );
+                                    if(this.verifyIfHavePermission == true){
+                                      print(this.verifyIfHavePermission);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => mainNavigation(pessoa: this.pessoaLogada),
+                                          )
+                                      );
+                                    }
+                                    else{
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => giveAcess(),
+                                          )
+                                      );
+                                    }
                                   } catch(e){
                                     Navigator.push(
                                       context,
