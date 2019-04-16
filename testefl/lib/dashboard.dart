@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:testefl/customAssets/customColorDashboard.dart';
+import 'package:testefl/error.dart';
 
 class dashboard extends StatefulWidget {
   final Person pessoa;
@@ -17,6 +18,7 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<dashboard> {
+  bool haveInternet;
   List interests;
   List friends;
   final String urlInterests = "http://apigetrest.herokuapp.com/interesses/";
@@ -32,13 +34,21 @@ class _dashboardState extends State<dashboard> {
 
 
   Future<String> getInterests() async{
-    var res = await http
-        .get(Uri.encodeFull(urlInterests), headers: {"Accept":"application/json"});
+    try{
+      var res = await http
+          .get(Uri.encodeFull(urlInterests), headers: {"Accept":"application/json"});
 
-    setState(() {
-      var resBody = json.decode(res.body);
-      interests= resBody["results"];
+      setState(() {
+        haveInternet = true;
+        var resBody = json.decode(res.body);
+        interests= resBody["results"];
+      });
+  } catch(e){
+    setState((){
+      haveInternet = false;
     });
+  }
+
   }
 
   Future<String> getFriends() async{
@@ -296,6 +306,10 @@ List<Widget> listAmigosEmComum(BuildContext context){
 
   @override
   Widget build(BuildContext context) {
+    haveInternet ? sucessToAcessTheInternet(context) : errorSomethingWrongWith(context);
+  }
+
+  Widget sucessToAcessTheInternet(BuildContext context){
     return Scaffold(
       backgroundColor: customColor().primaryBackgroundGreyColor,
       body: ListView(
@@ -362,7 +376,5 @@ List<Widget> listAmigosEmComum(BuildContext context){
       ),
 
     );
-
-
   }
 }

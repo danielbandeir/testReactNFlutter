@@ -111,27 +111,11 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: haveInternet ? sucess : errorSomethingWrongWith()
+      body: haveInternet ? haveAcessToInternet() : errorSomethingWrongWith(context)
     );
   }
 
-  Widget errorSomethingWrongWith(){
-    return Scaffold(
-      backgroundColor: customColor().white,
-      body: Stack(
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('Eita, algo deu errado')
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget sucess(){
+  Widget haveAcessToInternet(){
     return Scaffold(
       body: Stack(
         children: <Widget>[

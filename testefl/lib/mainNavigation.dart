@@ -23,6 +23,7 @@ class mainNavigation extends StatefulWidget {
 }
 
 class _mainNavigationState extends State<mainNavigation> {
+  bool haveInternet;
   String os = Platform.operatingSystem;
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   osInfo device;
