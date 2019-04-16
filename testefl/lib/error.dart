@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:testefl/customAssets/customColorError.dart';
 import 'package:testefl/main.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 
 @override
 Widget errorSomethingWrongWith(BuildContext context){
+  String _animationName = "Untitled";
   return Scaffold(
     backgroundColor: customColor().white,
     body: Stack(
@@ -13,6 +15,17 @@ Widget errorSomethingWrongWith(BuildContext context){
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Container(
+                height: 250,
+                width: 300,
+                child: FlareActor(
+                  "assets/errorNew.flr",
+                  alignment: Alignment.center,
+                  fit: BoxFit.fill,
+                  animation: _animationName,
+                  isPaused: false,
+                ),
+              ),
               Text('Oops!',
               style: TextStyle(color: customColor().grey, fontSize:48, fontWeight: FontWeight.bold)
               ),
