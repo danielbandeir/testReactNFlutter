@@ -29,7 +29,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool haveInternet;
+  bool haveInternet  = true;
   List dataHotel;
   List dataPerson;
   Person pessoaLogada;
@@ -72,7 +72,6 @@ class _LoginState extends State<Login> {
         var resBody = json.decode(res.body);
         dataHotel = resBody["results"];
         print('entrou');
-        haveInternet = true;
         print('haveinternet é '+haveInternet.toString());
       });
 
@@ -211,11 +210,19 @@ class _LoginState extends State<Login> {
                             FlatButton(
                               onPressed: (){
                                 if (this.verifyIfUserExist()){
-                                  Navigator.push(
+                                  try{
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => mainNavigation(pessoa: this.pessoaLogada),
+                                        )
+                                    );
+                                  } catch(e){
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) => mainNavigation(pessoa: this.pessoaLogada),
-                                      )
-                                  );
+                                    )
+                                    );
+                                  }
                                 }
                                 else {
                                   return showDialog(

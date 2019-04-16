@@ -5,6 +5,7 @@ import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:testefl/models/person.dart';
 import 'package:testefl/customAssets/customColorWall.dart';
+import 'package:testefl/error.dart';
 
 class wallProfile extends StatefulWidget {
   final Person pessoa;
@@ -16,18 +17,25 @@ class wallProfile extends StatefulWidget {
 }
 
 class _wallProfileState extends State<wallProfile> {
+  bool haveInternet = true;
   List dataComment;
   final String urlApiComments = "http://apigetrest.herokuapp.com/comentario/";
 
 
   Future<String> getCommentData() async{
-    var res = await http
-        .get(Uri.encodeFull(urlApiComments), headers: {"Accept":"application/json"});
+    try{
+      var res = await http
+          .get(Uri.encodeFull(urlApiComments), headers: {"Accept":"application/json"});
 
-    setState( (){
-      var resComment = json.decode(res.body);
-      dataComment = resComment["results"];
-    });
+      setState( (){
+        var resComment = json.decode(res.body);
+        dataComment = resComment["results"];
+      });
+    } catch(e){
+      setState(() {
+        haveInternet = false;
+      });
+    }
   }
 
   @override
@@ -42,19 +50,18 @@ class _wallProfileState extends State<wallProfile> {
         itemBuilder: (BuildContext context, int i) {
           return Center(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Padding(
                   padding: EdgeInsets.all(0.0),
                   child: Column( //button more vertical for comment info
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
                         color: customColor().white,
                         width: MediaQuery
                             .of(context)
                             .size
                             .width - 50,
-                        height: 200,
                         child: Stack(
                           children: <Widget>[
                             Row(
@@ -195,6 +202,10 @@ class _wallProfileState extends State<wallProfile> {
 
   @override
   Widget build(BuildContext context) {
+    return haveInternet ? sucessToAcessTheInternet(context) : errorSomethingWrongWith(context);
+  }
+
+  Widget sucessToAcessTheInternet(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         title: Text(

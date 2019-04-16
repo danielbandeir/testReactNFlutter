@@ -9,6 +9,7 @@ import 'package:testefl/wall.dart';
 import 'package:testefl/models/osInfo.dart';
 import 'package:device_info/device_info.dart';
 import 'package:testefl/seeProfile.dart';
+import 'package:testefl/error.dart';
 import 'dart:io' show Platform;
 
 
@@ -23,7 +24,7 @@ class mainNavigation extends StatefulWidget {
 }
 
 class _mainNavigationState extends State<mainNavigation> {
-  bool haveInternet;
+  bool haveInternet = true;
   String os = Platform.operatingSystem;
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   osInfo device;
@@ -79,24 +80,28 @@ class _mainNavigationState extends State<mainNavigation> {
 
 
   Widget callPage(int index){
-    switch(index){
-      case 0 : {
-        return wallProfile(pessoa: widget.pessoa);
+    try{
+      switch(index){
+        case 0 : {
+          return wallProfile(pessoa: widget.pessoa);
+        }
+        case 1: {
+          return dashboard(pessoa: widget.pessoa);
+        }
+        case 2: {
+          return Container(
+            height: 2000,
+            color: Colors.yellow,
+          );
+        }
+        case 3:{
+          return seeProfile();
+        }
+        default:
+          return dashboard(pessoa: widget.pessoa);
       }
-      case 1: {
-        return dashboard(pessoa: widget.pessoa);
-      }
-      case 2: {
-        return Container(
-          height: 2000,
-          color: Colors.yellow,
-        );
-      }
-      case 3:{
-        return seeProfile();
-      }
-      default:
-        return dashboard(pessoa: widget.pessoa);
+    }catch (e){
+      return errorSomethingWrongWith(context);
     }
   }
 

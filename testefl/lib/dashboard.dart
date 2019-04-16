@@ -18,7 +18,7 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<dashboard> {
-  bool haveInternet;
+  bool haveInternet  = true;
   List interests;
   List friends;
   final String urlInterests = "http://apigetrest.herokuapp.com/interesses/";
@@ -39,7 +39,6 @@ class _dashboardState extends State<dashboard> {
           .get(Uri.encodeFull(urlInterests), headers: {"Accept":"application/json"});
 
       setState(() {
-        haveInternet = true;
         var resBody = json.decode(res.body);
         interests= resBody["results"];
       });
@@ -306,7 +305,7 @@ List<Widget> listAmigosEmComum(BuildContext context){
 
   @override
   Widget build(BuildContext context) {
-    haveInternet ? sucessToAcessTheInternet(context) : errorSomethingWrongWith(context);
+    return haveInternet ? sucessToAcessTheInternet(context) : errorSomethingWrongWith(context);
   }
 
   Widget sucessToAcessTheInternet(BuildContext context){
