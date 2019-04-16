@@ -39,7 +39,7 @@ class _dashboardState extends State<dashboard> {
           .get(Uri.encodeFull(urlInterests), headers: {"Accept":"application/json"});
 
       setState(() {
-        var resBody = json.decode(res.body);
+        var resBody = json.decode(utf8.decode(res.bodyBytes));
         interests= resBody["results"];
       });
   } catch(e){

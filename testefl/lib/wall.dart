@@ -28,7 +28,7 @@ class _wallProfileState extends State<wallProfile> {
           .get(Uri.encodeFull(urlApiComments), headers: {"Accept":"application/json"});
 
       setState( (){
-        var resComment = json.decode(res.body);
+        var resComment = json.decode(utf8.decode(res.bodyBytes));
         dataComment = resComment["results"];
       });
     } catch(e){

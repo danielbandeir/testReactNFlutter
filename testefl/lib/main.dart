@@ -42,7 +42,6 @@ class _LoginState extends State<Login> {
   @override
   void initState(){
     try{
-      print('tem internet');
       this.getHotelData();
       this.getPersonData();
       super.initState();
@@ -57,7 +56,7 @@ class _LoginState extends State<Login> {
         .get(Uri.encodeFull(urlApiPerson), headers: {"Accept":"application/json"});
 
     setState(() {
-      var resBody = json.decode(res.body);
+      var resBody = json.decode(utf8.decode(res.bodyBytes));
       dataPerson = resBody["results"];
     });
   }
